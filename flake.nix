@@ -114,6 +114,27 @@
               inherit self pkgs;
             }
           );
+          test =
+            let
+              nvim-test = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
+                plugins = [
+                  {
+                    plugin = pkgs.vimPlugins.plenary-nvim;
+                    optional = false;
+                  }
+                ];
+                wrapRc = false;
+              };
+            in
+            pkgs.runCommand "test" { nativeBuildInputs = [ nvim-test ]; } ''
+              cp -r ${self} source
+              chmod -R u+w source
+              cd source
+              export HOME="$TMPDIR"
+              nvim --headless --noplugin -u tests/minimal_init.lua \
+                -c "PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal_init.lua', sequential = true}"
+              touch "$out"
+            '';
         };
       }
     );
