@@ -1,0 +1,7 @@
+.direnv
+result
+result-*
+
+*.log
+
+.env
