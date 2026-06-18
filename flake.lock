@@ -1,5 +1,44 @@
 {
   "nodes": {
+    "agent-skills": {
+      "inputs": {
+        "agent-skills": "agent-skills_2",
+        "mattpocock-skills": "mattpocock-skills",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "pproenca-skills": "pproenca-skills",
+        "stop-slop": "stop-slop"
+      },
+      "locked": {
+        "path": "./nix/agent-skills",
+        "type": "path"
+      },
+      "original": {
+        "path": "./nix/agent-skills",
+        "type": "path"
+      },
+      "parent": []
+    },
+    "agent-skills_2": {
+      "inputs": {
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1781510879,
+        "narHash": "sha256-YE3NCJtgZVa1U2VTjwQVuAhmEJW4raVq7eJaFiX60X8=",
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "rev": "5ff9039277a9d62907426d033ecf76addb2402cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -77,7 +116,61 @@
         "type": "github"
       }
     },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "agent-skills",
+          "agent-skills",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781497404,
+        "narHash": "sha256-9GAF8sSsnkyCVCWkomXR0T+zdSxyUlfPt6neQidimdg=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "1285cd3d6882a9847f2d56ed5541b3350c8a6162",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "mattpocock-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781772093,
+        "narHash": "sha256-6T0KwZcUIIbd6kpkQXPCnnJPVY2mEjxYjed4FjKnRAw=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1781074563,
+        "narHash": "sha256-md8WlXOlfnIeHeOScMTTHFyf2d6iaTwPl2apR5EQ3P4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9ae611a455b90cf061d8f332b977e387bda8e1ca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1780923603,
         "narHash": "sha256-D7R++xkWBGuW4tyNb+gyiKWobgakPMO1m+qzcVAmdV8=",
@@ -93,12 +186,45 @@
         "type": "github"
       }
     },
+    "pproenca-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781254665,
+        "narHash": "sha256-PO5XoLpv8ivhGWNXhMbTYaTy/Vm3ALRACH4mOfpWkd4=",
+        "owner": "pproenca",
+        "repo": "dot-skills",
+        "rev": "9c015c68df33adf461ea9fa7071c119ca0061a0a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pproenca",
+        "repo": "dot-skills",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "agent-skills": "agent-skills",
         "flake-utils": "flake-utils",
         "git-hooks": "git-hooks",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "stop-slop": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773773436,
+        "narHash": "sha256-JMqlCRVEAfwG1TLMDpnamznkBfkmX6e2XyETTTH/TSE=",
+        "owner": "hardikpandya",
+        "repo": "stop-slop",
+        "rev": "8da1f030185bdfe8471220585162991eaeb970e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hardikpandya",
+        "repo": "stop-slop",
+        "type": "github"
       }
     },
     "systems": {

@@ -1,0 +1,89 @@
+{
+  inputs = {
+    agent-skills.url = "github:Kyure-A/agent-skills-nix";
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    pproenca-skills = {
+      url = "github:pproenca/dot-skills";
+      flake = false;
+    };
+    stop-slop = {
+      url = "github:hardikpandya/stop-slop";
+      flake = false;
+    };
+  };
+
+  outputs =
+    {
+      agent-skills,
+      mattpocock-skills,
+      nixpkgs,
+      pproenca-skills,
+      stop-slop,
+      ...
+    }:
+    let
+      inherit (nixpkgs) lib;
+      forEachSystem = lib.genAttrs [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
+    in
+    {
+      devShells = forEachSystem (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+
+          agentLib = agent-skills.lib.agent-skills;
+          sources = {
+            mattpocock-skills = {
+              path = mattpocock-skills;
+              subdir = "skills";
+            };
+            pproenca-skills = {
+              path = pproenca-skills;
+              subdir = "skills";
+            };
+            stop-slop = {
+              path = stop-slop;
+            };
+          };
+          catalog = agentLib.discoverCatalog sources;
+          allowlist = agentLib.allowlistFor {
+            inherit catalog sources;
+            enable = [
+              ".experimental/vhs"
+              "productivity/grill-me"
+              "productivity/grilling"
+              "productivity/handoff"
+              "stop-slop"
+            ];
+          };
+          selection = agentLib.selectSkills {
+            inherit catalog allowlist sources;
+            skills = { };
+          };
+          bundle = agentLib.mkBundle { inherit pkgs selection; };
+          localTargets = {
+            claude = agentLib.defaultLocalTargets.claude // {
+              enable = true;
+            };
+          };
+        in
+        {
+          default = pkgs.mkShellNoCC {
+            shellHook = agentLib.mkShellHook {
+              inherit pkgs bundle;
+              targets = localTargets;
+            };
+          };
+        }
+      );
+    };
+}

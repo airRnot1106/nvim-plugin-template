@@ -1,5 +1,9 @@
 {
   inputs = {
+    agent-skills = {
+      url = "path:./nix/agent-skills";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
@@ -16,6 +20,7 @@
   outputs =
     {
       self,
+      agent-skills,
       flake-utils,
       git-hooks,
       nixpkgs,
@@ -82,6 +87,7 @@
           in
           {
             default = pkgs.mkShellNoCC {
+              inputsFrom = [ agent-skills.devShells.${system}.default ];
               inherit shellHook;
               packages =
                 (with pkgs; [
