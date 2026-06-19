@@ -57,17 +57,28 @@
           catalog = agentLib.discoverCatalog sources;
           allowlist = agentLib.allowlistFor {
             inherit catalog sources;
-            enable = [
-              ".experimental/vhs"
-              "productivity/grill-me"
-              "productivity/grilling"
-              "productivity/handoff"
-              "stop-slop"
-            ];
+            enable = [ "stop-slop" ];
           };
           selection = agentLib.selectSkills {
             inherit catalog allowlist sources;
-            skills = { };
+            skills = {
+              grill-me = {
+                from = "mattpocock-skills";
+                path = "productivity/grill-me";
+              };
+              grilling = {
+                from = "mattpocock-skills";
+                path = "productivity/grilling";
+              };
+              handoff = {
+                from = "mattpocock-skills";
+                path = "productivity/handoff";
+              };
+              vhs = {
+                from = "pproenca-skills";
+                path = ".experimental/vhs";
+              };
+            };
           };
           bundle = agentLib.mkBundle { inherit pkgs selection; };
           localTargets = {
